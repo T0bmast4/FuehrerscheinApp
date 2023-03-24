@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Führerschein App</string>
+
+    <!--Login-->
+    <string name="loginText">Anmelden</string>
+    <string name="loginEmail">Benutzername</string>
+    <string name="loginPassword">Passwort</string>
+    <string name="loginButtonText">Login</string>
+
+    <!--Main-Activity-->
+
+    <string name="DropDown1">Test1</string>
+    <string name="DropDown2">Test2</string>
+
+</resources>
