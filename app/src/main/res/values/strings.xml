@@ -6,6 +6,7 @@
     <string name="loginEmail">Benutzername</string>
     <string name="loginPassword">Passwort</string>
     <string name="loginButtonText">Login</string>
+    <string name="registerButtonText">Registrieren</string>
 
     <!--Main-Activity-->
 
