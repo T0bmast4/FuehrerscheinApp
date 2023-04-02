@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import dev.tobi.fuehrerscheinapp.mysql.MySQL;
 import dev.tobi.fuehrerscheinapp.mysql.SQLAccounts;
@@ -26,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
-        System.out.println("Test");
         connectMySQL();
+        Toast.makeText(MainActivity.this, "MySQL connected", Toast.LENGTH_SHORT).show();
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -35,28 +39,29 @@ public class MainActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         loginButton = findViewById(R.id.loginbutton);
 
+        //Login Button
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SQLAccounts.registerAccount("Tobi", "goijdfr42");
+                if(SQLAccounts.accountExists(String.valueOf(username.getText()))) {
+                    Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(32,64,1,15*1024,2);
+                    boolean validPassword = encoder.matches(password.getText() + "Hochpräzisionsereigniszeitgeber", SQLAccounts.getPassword(String.valueOf(username.getText())));
+                    if(validPassword) {
+                        loadOverview();
+                    }
+                }
             }
         });
     }
 
     private void connectMySQL() {
-        mysql = new MySQL("38.242.141.75", "FuehrerscheinApp", "fuehrerscheinapp", "9u&3$(&ggj4§549");
+        mysql = new MySQL("38.242.141.75", "FuehrerscheinApp", "fuehrerscheinapp", "YVwNew6n6bTFW2E");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(R.string.DropDown1);
-        menu.add(R.string.DropDown2);
-        return super.onCreateOptionsMenu(menu);
-    }
+    public final static ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
 
     private void loadOverview() {
-        Intent switchActivity = new Intent(this, OverviewActivity.class);
-        startActivity(switchActivity);
+        Intent overviewActivity = new Intent(this, OverviewActivity.class);
+        startActivity(overviewActivity);
     }
-
 }
