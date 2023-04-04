@@ -1,67 +1,69 @@
 package dev.tobi.fuehrerscheinapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import dev.tobi.fuehrerscheinapp.mysql.MySQL;
-import dev.tobi.fuehrerscheinapp.mysql.SQLAccounts;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText username;
-    private EditText password;
-    private Button loginButton;
-    public static MySQL mysql;
+    private Button listButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
-        connectMySQL();
-        Toast.makeText(MainActivity.this, "MySQL connected", Toast.LENGTH_SHORT).show();
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        //Snackbar snackbar = Snackbar.make(view, "test", "3");
+        //snackbar.show();
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        listButton = findViewById(R.id.listButton);
 
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        loginButton = findViewById(R.id.loginbutton);
-
-        //Login Button
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SQLAccounts.accountExists(String.valueOf(username.getText()))) {
-                    Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(32,64,1,15*1024,2);
-                    boolean validPassword = encoder.matches(password.getText() + "Hochpräzisionsereigniszeitgeber", SQLAccounts.getPassword(String.valueOf(username.getText())));
-                    if(validPassword) {
-                        loadOverview();
-                    }
-                }
+                loadActivity(ListActivity.class);
             }
         });
     }
 
-    private void connectMySQL() {
-        mysql = new MySQL("38.242.141.75", "FuehrerscheinApp", "fuehrerscheinapp", "YVwNew6n6bTFW2E");
+    @Override
+    public void onBackPressed () {
+
     }
 
-    public final static ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+    private void loadActivity(Class classActivity) {
+        Intent activity = new Intent(this, classActivity);
+        startActivity(activity);
+        finish();
+    }
 
-    private void loadOverview() {
-        Intent overviewActivity = new Intent(this, OverviewActivity.class);
-        startActivity(overviewActivity);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add("Logout");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getTitle().equals("Logout")) {
+            SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putBoolean("hasLoggedIn", false);
+            editor.commit();
+            loadActivity(LoginActivity.class);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

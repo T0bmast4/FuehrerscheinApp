@@ -1,16 +1,41 @@
 <resources>
     <string name="app_name">Führerschein App</string>
 
-    <!--Login-->
+    <!--Login/Register-->
     <string name="loginText">Anmelden</string>
     <string name="loginEmail">Benutzername</string>
     <string name="loginPassword">Passwort</string>
     <string name="loginButtonText">Login</string>
     <string name="registerButtonText">Registrieren</string>
+    <string name="emptyUsername">Bitte gib einen Benutzernamen ein.</string>
+    <string name="emptyPassword">Bitte gib ein Passwort ein.</string>
+    <string name="wrongPassword">Bitte überprüfe deine Passwort Eingabe.</string>
+    <string name="accountNotFound">Dieser Account existiert nicht.</string>
+    <string name="usernameWithSpace">Bitte gib ein Benutzernamen ohne Leerzeichen ein.</string>
+    <string name="passwordWithSpace">Bitte gib ein Passwort ohne Leerzeichen ein.</string>
+    <string name="accountExists">Dieser Account existiert bereits.</string>
+    <string name="correctText">Dein Account wurde erfolgreich erstellt.</string>
 
-    <!--Main-Activity-->
 
-    <string name="DropDown1">Test1</string>
-    <string name="DropDown2">Test2</string>
+    <!--Main-->
+    <string name="suggestions">Zuletzt gefahren: </string>
+    <string name="add">Hinzufügen</string>
+    <string name="toList">Zu der Liste -></string>
+    <string name="overview">Übersicht: </string>
+
+    <string-array name="time">
+        <item>Früh</item>
+        <item>Tag</item>
+        <item>Dämmerung</item>
+        <item>Nacht</item>
+    </string-array>
+
+    <string-array name="weather">
+        <item>Normal</item>
+        <item>Windig</item>
+        <item>Regen</item>
+        <item>Schnee</item>
+    </string-array>
+
 
 </resources>

@@ -2,20 +2,17 @@ package dev.tobi.fuehrerscheinapp.mysql;
 
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dev.tobi.fuehrerscheinapp.MainActivity;
+import dev.tobi.fuehrerscheinapp.LoadActivity;
+import dev.tobi.fuehrerscheinapp.LoginActivity;
 
 public class SQLAccounts {
 
     public static boolean accountExists(String username) {
         try {
-            ResultSet rs = MainActivity.mysql.query("SELECT * FROM Accounts WHERE USERNAME=?", username);
+            ResultSet rs = LoadActivity.mysql.query("SELECT * FROM Accounts WHERE USERNAME=?", username);
             if(rs.next()) {
                 return rs.getString("USERNAME") != null;
             }
@@ -27,13 +24,13 @@ public class SQLAccounts {
 
     public static void registerAccount(String username, String password) {
         if(!(accountExists(username))) {
-            MainActivity.mysql.update("INSERT INTO Accounts(USERNAME, PASSWORD) VALUES (?, ?);", username, encryptPassword(password));
+            LoadActivity.mysql.update("INSERT INTO Accounts(USERNAME, PASSWORD) VALUES (?, ?);", username, encryptPassword(password));
         }
     }
 
     public static String getPassword(String username) {
         try {
-            ResultSet rs = MainActivity.mysql.query("SELECT * FROM Accounts WHERE USERNAME=?", username);
+            ResultSet rs = LoadActivity.mysql.query("SELECT * FROM Accounts WHERE USERNAME=?", username);
             if (rs.next())
                 return rs.getString("PASSWORD");
         } catch (SQLException e) {
