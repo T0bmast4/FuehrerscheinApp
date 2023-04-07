@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import dev.tobi.fuehrerscheinapp.mysql.MySQL;
+import dev.tobi.fuehrerscheinapp.utils.MyApp;
 
 public class LoadActivity extends AppCompatActivity {
 
@@ -21,17 +22,14 @@ public class LoadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_load);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         connectMySQL();
-        Toast.makeText(LoadActivity.this, "MySQL connected", Toast.LENGTH_SHORT).show();
+        MyApp.debug("MySQL connected", LoadActivity.this);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-                boolean hasLoggedIn = sharedPreferences.getBoolean("hasLoggedIn", false);
-
-                if(hasLoggedIn) {
-                    loadActivity(MainActivity.class);
+                if(MyApp.isLoggedIn()) {
+                    MyApp.loadActivity(LoadActivity.this, MainActivity.class, true);
                 } else {
-                    loadActivity(LoginActivity.class);
+                    MyApp.loadActivity(LoadActivity.this, LoginActivity.class, true);
                 }
             }
         }, 3000);
@@ -39,11 +37,5 @@ public class LoadActivity extends AppCompatActivity {
 
     private void connectMySQL() {
         mysql = new MySQL("38.242.141.75", "FuehrerscheinApp", "fuehrerscheinapp", "YVwNew6n6bTFW2E");
-    }
-
-    private void loadActivity(Class classActivity) {
-        Intent activity = new Intent(this, classActivity);
-        startActivity(activity);
-        finish();
     }
 }

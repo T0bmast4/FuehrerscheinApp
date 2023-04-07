@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
 
 import dev.tobi.fuehrerscheinapp.mysql.MySQL;
 import dev.tobi.fuehrerscheinapp.mysql.SQLAccounts;
+import dev.tobi.fuehrerscheinapp.utils.MyApp;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.putBoolean("hasLoggedIn", true);
                                 editor.putString("loggedInUser", username.getText().toString());
                                 editor.commit();
-                                loadActivity(MainActivity.class);
+                                MyApp.loadActivity(LoginActivity.this, MainActivity.class, true);
                             } else {
                                 errorText.setText(R.string.wrongPassword);
                             }
@@ -84,16 +85,10 @@ public class LoginActivity extends AppCompatActivity {
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadActivity(RegisterActivity.class);
+                MyApp.loadActivity(LoginActivity.this, RegisterActivity.class, false);
             }
         });
     }
 
     public final static ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
-
-    private void loadActivity(Class classActivity) {
-        Intent activity = new Intent(this, classActivity);
-        startActivity(activity);
-        finish();
-    }
 }

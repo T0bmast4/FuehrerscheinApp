@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import dev.tobi.fuehrerscheinapp.mysql.SQLAccounts;
+import dev.tobi.fuehrerscheinapp.utils.MyApp;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText username;
@@ -52,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     handler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
-                                            loadActivity(MainActivity.class);
+                                            MyApp.loadActivity(RegisterActivity.this, MainActivity.class, true);
                                         }
                                     }, 1500);
                                 } else {
@@ -72,11 +73,5 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void loadActivity(Class classActivity) {
-        Intent activity = new Intent(this, classActivity);
-        startActivity(activity);
-        finish();
     }
 }

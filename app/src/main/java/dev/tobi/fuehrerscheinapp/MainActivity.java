@@ -15,6 +15,8 @@ import android.widget.Button;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import dev.tobi.fuehrerscheinapp.utils.MyApp;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button listButton;
@@ -32,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         listButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadActivity(ListActivity.class);
+                MyApp.loadActivity(MainActivity.this, ListActivity.class, false);
             }
         });
     }
@@ -40,12 +42,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed () {
 
-    }
-
-    private void loadActivity(Class classActivity) {
-        Intent activity = new Intent(this, classActivity);
-        startActivity(activity);
-        finish();
     }
 
     @Override
@@ -61,8 +57,10 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
             editor.putBoolean("hasLoggedIn", false);
+            editor.putString("loggedInUser", "");
             editor.commit();
-            loadActivity(LoginActivity.class);
+            MyApp.loadActivity(MainActivity.this, LoginActivity.class, true);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

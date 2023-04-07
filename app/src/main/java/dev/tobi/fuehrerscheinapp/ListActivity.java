@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import dev.tobi.fuehrerscheinapp.utils.MyApp;
+
 public class ListActivity extends AppCompatActivity {
 
     private FloatingActionButton newItemButton;
@@ -25,14 +27,8 @@ public class ListActivity extends AppCompatActivity {
         newItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadActivity(AddActivity.class);
+                MyApp.loadActivity(ListActivity.this, AddActivity.class, false);
             }
         });
-    }
-
-    private void loadActivity(Class classActivity) {
-        Intent activity = new Intent(this, classActivity);
-        startActivity(activity);
-        finish();
     }
 }
