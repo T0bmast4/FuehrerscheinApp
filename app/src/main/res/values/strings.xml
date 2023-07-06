@@ -8,6 +8,7 @@
     <string name="loginButtonText">Login</string>
     <string name="registerButtonText">Registrieren</string>
     <string name="emptyUsername">Bitte gib einen Benutzernamen ein.</string>
+    <string name="wrongUsername">Bitte überprüfe deine Benutzernamen Eingabe.</string>
     <string name="emptyPassword">Bitte gib ein Passwort ein.</string>
     <string name="wrongPassword">Bitte überprüfe deine Passwort Eingabe.</string>
     <string name="accountNotFound">Dieser Account existiert nicht.</string>
@@ -22,11 +23,13 @@
     <string name="add">Hinzufügen</string>
     <string name="toList">Zu der Liste -></string>
     <string name="overview">Übersicht: </string>
+    <string name="selectTime">Zeit</string>
+    <string name="selectWeather">Wetter</string>
 
     <string-array name="time">
+        <item>Tagsüber</item>
         <item>Früh</item>
-        <item>Tag</item>
-        <item>Dämmerung</item>
+        <item>Abend</item>
         <item>Nacht</item>
     </string-array>
 
@@ -36,6 +39,13 @@
         <item>Regen</item>
         <item>Schnee</item>
     </string-array>
+
+    <string name="start">Start: </string>
+    <string name="ziel">Ziel: </string>
+    <string name="kilometer">Kilometer: </string>
+    <string name="kilometerstand">Kilometerstand: </string>
+    <string name="timeDetail">Zeit: </string>
+    <string name="weatherDetail">Wetter: </string>
 
 
 </resources>

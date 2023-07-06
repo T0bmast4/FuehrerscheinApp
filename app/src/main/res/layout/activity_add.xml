@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Kilometerstand"
+        android:hint="Kilometerstand (nacher)"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,11 +35,11 @@
         app:layout_constraintVertical_bias="0.329" />
 
     <EditText
-        android:id="@+id/to_input"
+        android:id="@+id/end_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Bis"
+        android:hint="Ziel"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,11 +49,11 @@
         app:layout_constraintVertical_bias="0.23" />
 
     <EditText
-        android:id="@+id/from_input"
+        android:id="@+id/start_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Von"
+        android:hint="Start"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,28 +62,47 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.164" />
 
-    <Spinner
-        android:id="@+id/time_spinner"
-        android:layout_width="208dp"
-        android:layout_height="41dp"
-        android:background="@drawable/border"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="211dp"
+        android:layout_height="66dp"
+        android:layout_margin="16dp"
+        android:hint="@string/selectTime"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/kilometer_stand_input"
+        app:layout_constraintVertical_bias="0.0">
 
-    <Spinner
-        android:id="@+id/weather_spinner"
-        android:layout_width="208dp"
-        android:layout_height="41dp"
-        android:background="@drawable/border"
+        <AutoCompleteTextView
+            android:id="@+id/timeDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="211dp"
+        android:layout_height="66dp"
+        android:layout_margin="16dp"
+        android:hint="@string/selectWeather"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.602" />
+        app:layout_constraintTop_toBottomOf="@+id/kilometer_stand_input"
+        app:layout_constraintVertical_bias="0.223">
+
+        <AutoCompleteTextView
+            android:id="@+id/weatherDropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/newItemButton"
@@ -95,6 +114,16 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.711" />
+        app:layout_constraintVertical_bias="0.767" />
+
+    <TextView
+        android:id="@+id/errorText_Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintBottom_toTopOf="@+id/newItemButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,36 +41,40 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 manager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                if(!username.getText().toString().equals("")) {
-                    if(!username.getText().toString().contains(" ")) {
-                        if (!password.getText().toString().equals("")) {
-                            if (!password.getText().toString().contains(" ")) {
-                                if (!SQLAccounts.accountExists(username.getText().toString())) {
-                                    SQLAccounts.registerAccount(username.getText().toString(), password.getText().toString());
-                                    correctText.setText(R.string.correctText);
-                                    errorText.setText("");
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            MyApp.loadActivity(RegisterActivity.this, MainActivity.class, true);
-                                        }
-                                    }, 1500);
-                                } else {
-                                    errorText.setText(R.string.accountExists);
-                                }
-                            } else {
-                                errorText.setText(R.string.passwordWithSpace);
-                            }
-                        } else {
-                            errorText.setText(R.string.emptyPassword);
-                        }
-                    } else {
-                        errorText.setText(R.string.usernameWithSpace);
-                    }
-                } else {
+
+                if (username.getText().toString().equals("")) {
                     errorText.setText(R.string.emptyUsername);
+                    return;
                 }
+                if (username.getText().toString().contains(" ")) {
+                    errorText.setText(R.string.usernameWithSpace);
+                    return;
+                }
+                if (password.getText().toString().equals("")) {
+                    errorText.setText(R.string.emptyPassword);
+                    return;
+                }
+                if (password.getText().toString().contains(" ")) {
+                    errorText.setText(R.string.passwordWithSpace);
+                    return;
+                }
+                if (SQLAccounts.accountExists(username.getText().toString())) {
+                    errorText.setText(R.string.accountExists);
+                    return;
+                }
+
+
+                SQLAccounts.registerAccount(username.getText().toString(), password.getText().toString());
+                correctText.setText(R.string.correctText);
+                errorText.setText("");
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyApp.setUser(username.getText().toString());
+                        MyApp.loadActivity(RegisterActivity.this, MainActivity.class, true);
+                    }
+                }, 1500);
             }
         });
     }

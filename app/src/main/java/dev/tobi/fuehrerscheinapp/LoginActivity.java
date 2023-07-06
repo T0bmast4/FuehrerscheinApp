@@ -47,47 +47,51 @@ public class LoginActivity extends AppCompatActivity {
         registerText = findViewById(R.id.registerText);
         errorText = findViewById(R.id.errorText);
 
-        //Login Button
+        /**Login Button**/
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 manager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                if (!username.getText().toString().equals("") && !username.getText().toString().contains(" ")) {
-                    if (!password.getText().toString().equals("") && !password.getText().toString().contains(" ")) {
-                        if (SQLAccounts.accountExists(String.valueOf(username.getText()))) {
-                            Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(32, 64, 1, 15 * 1024, 2);
-                            boolean validPassword = encoder.matches(password.getText() + "Hochpräzisionsereigniszeitgeber", SQLAccounts.getPassword(String.valueOf(username.getText())));
-                            if (validPassword) {
-                                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.PREFS_NAME, 0);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                                editor.putBoolean("hasLoggedIn", true);
-                                editor.putString("loggedInUser", username.getText().toString());
-                                editor.commit();
-                                MyApp.loadActivity(LoginActivity.this, MainActivity.class, true);
-                            } else {
-                                errorText.setText(R.string.wrongPassword);
-                            }
-                        } else {
-                            errorText.setText(R.string.accountNotFound);
-                        }
-                    } else {
-                        errorText.setText(R.string.wrongPassword);
-                    }
-                } else {
-                    errorText.setText(R.string.emptyUsername);
+                if (username.getText().toString().equals("") || username.getText().toString().contains(" ")) {
+                    errorText.setText(R.string.wrongUsername);
+                    return;
                 }
+                if (password.getText().toString().equals("") || password.getText().toString().contains(" ")) {
+                    errorText.setText(R.string.wrongPassword);
+                    return;
+                }
+                if (!SQLAccounts.accountExists(String.valueOf(username.getText()))) {
+                    errorText.setText(R.string.accountNotFound);
+                    return;
+                }
+                Argon2PasswordEncoder encoder = new Argon2PasswordEncoder(32, 64, 1, 15 * 1024, 2);
+                boolean validPassword = encoder.matches(password.getText() + "Hochpräzisionsereigniszeitgeber", SQLAccounts.getPassword(String.valueOf(username.getText())));
+                if (!validPassword) {
+                    errorText.setText(R.string.wrongPassword);
+                    return;
+                }
+
+
+                MyApp.setUser(username.getText().toString());
+                MyApp.loadActivity(LoginActivity.this, MainActivity.class, true);
             }
         });
 
-        //Register Button
+        /**Register Button**/
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MyApp.loadActivity(LoginActivity.this, RegisterActivity.class, false);
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        System.exit(0);
     }
 
     public final static ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
