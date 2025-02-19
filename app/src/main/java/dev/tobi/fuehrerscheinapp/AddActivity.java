@@ -58,7 +58,7 @@ public class AddActivity extends AppCompatActivity {
         weatherDropdown = findViewById(R.id.weatherDropdown);
         addButton = findViewById(R.id.newItemButton);
 
-        //Places.initialize(getApplicationContext(), "AIzaSyClUJOMKErRuZoK56JnJhxiZ8B35UEI0TY");
+        //Places.initialize(getApplicationContext(), "");
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.time, android.R.layout.simple_spinner_dropdown_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
